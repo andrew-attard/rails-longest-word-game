@@ -1,0 +1,21 @@
+<%# Display the 10 random letters gneratd by the 'new' action
+Bonus: Make them look nice by importing/using Bootstrap (JS Importmap or
+CDN via application.html.erb?) %>
+<div class="container">
+  <% @letters.each do |letter| %>
+    <div class="d-inline p-2 bg-primary text-white border"><%= letter %></div>
+  <% end %>
+
+  <%# Make a form which asks for the user's guessed word, then send it to the
+  controller %>
+  <form action="/score" method="get" data-turbo="false">
+    <p>What is the longest word you can find?</p>
+    <input type="text" name="user_guess">
+    <input type="submit" value="Play">
+    <%# Below used for API authentication %>
+    <%# <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+    <%# The bellow was necessary in order to send this instance of letters
+    back to the controller (they did not exist until the view was generated) %>
+    <%= hidden_field_tag :letters, @letters %>
+  </form>
+</div>
